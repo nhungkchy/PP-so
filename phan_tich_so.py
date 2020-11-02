@@ -20,7 +20,7 @@ def dataSort(data):
     return data
 
 def FindMonotonousInterval(data):
-    index = []
+    indexs = []
     lenght = len(data)
     index_head = 0
     index_tail = 1    
@@ -30,24 +30,42 @@ def FindMonotonousInterval(data):
         if delta_y1 * delta_y2 > 0:
             index_tail += 1
         else:
-            index.append([index_head, index_tail])
+            indexs.append([index_head, index_tail])
             index_head = index_tail
             index_tail += 1
-    index.append([index_head, index_tail])
-    return index
+    indexs.append([index_head, index_tail])
+    return indexs
 
 def InterpolationConditions(data):
+    
 
+    return
 
-def ConsiderApprox(data, index, y):
+def ConsiderApprox(data, indexs, y):
+    lenght = len(data)
 
+    for index in indexs:
+        if (data[index[0]][1]-data[index[1]][1])>0:
+            if (data[index[0]][1]<y or y<data[index[1]][1]):
+                indexs.remove(index)
+            else:
+                # tinh chat can xet trong doan
+                # tim va dua ra moc noi suy
+        else:
+            if data[index[0]][1]>y or y>data[index[1]][1]:
+                indexs.remove(index)
+            else:
+                #tinh chat can xet trong doan
+                # tim va dua va moc noi suy
+    
+    return indexs
 
-
-# index = []
-# index.append([2,3])
-# print(index)
 
 data_sort = dataSort(data)
 print(data_sort)
-index = FindMonotonousInterval(data_sort)
-print(index)
+indexs = FindMonotonousInterval(data_sort)
+print(indexs)
+y = 2.5
+index_y = ConsiderApprox(data, indexs, y)
+print(index_y)
+
