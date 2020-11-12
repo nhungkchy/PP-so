@@ -2,8 +2,10 @@
 # doc file thanh array 2D
 # sap xep lai theo thu tu tang dan cua x(viet ham)
 # tim khoang don dieu
-# tim khoang don dien chua y, xet tinh chat trong khoang ==> lua chon phuong phap?
+# tim khoang don dien chua y, xet tinh chat trong khoang ==> lua chon phuong phap
+# uu nhuoc diem cua 2 pp deu lua chon pp la tot nhat.?????
 # output: Khoang(phuong phap giai quyet) + moc noi suy
+
 
 import pandas as pd 
 
@@ -37,35 +39,49 @@ def FindMonotonousInterval(data):
     return indexs
 
 def InterpolationConditions(data):
-    
-
-    return
+    lenght = len(data)
+    for i in range(lenght-1):
+        for j in range(i+1,lenght):
+            if data[i][0] == data[j][0] and data[i][1] == data[j][1]:
+                return False
+            if data[i][0] == data[j][0]:
+                return False
+    return True
 
 def ConsiderApprox(data, indexs, y):
-    lenght = len(data)
+    lenght = len(indexs) - 1
 
-    for index in indexs:
-        if (data[index[0]][1]-data[index[1]][1])>0:
-            if (data[index[0]][1]<y or y<data[index[1]][1]):
-                indexs.remove(index)
+    while lenght >= 0:
+        if data[indexs[lenght][0]][1] > data[indexs[lenght][1]][1]:
+            if (data[indexs[lenght][0]][1]>y or y>data[indexs[lenght][1]][1]):
+                indexs.remove(indexs[lenght])
             else:
                 # tinh chat can xet trong doan
                 # tim va dua ra moc noi suy
+                break
         else:
-            if data[index[0]][1]>y or y>data[index[1]][1]:
-                indexs.remove(index)
+            if data[indexs[lenght][0]][1]>y or y>data[indexs[lenght][1]][1]:
+                indexs.remove(indexs[lenght])
             else:
                 #tinh chat can xet trong doan
                 # tim va dua va moc noi suy
+                break
+        lenght -= 1
     
     return indexs
 
+if __name__ == "__main__":
+    data_sort = dataSort(data)
+    print(data_sort)
+    print(InterpolationConditions(data_sort))
+    indexs = FindMonotonousInterval(data_sort)
+    print(indexs)
+    y = 2.5
+    index_y = ConsiderApprox(data, indexs, y)
+    print(index_y)
 
-data_sort = dataSort(data)
-print(data_sort)
-indexs = FindMonotonousInterval(data_sort)
-print(indexs)
-y = 2.5
-index_y = ConsiderApprox(data, indexs, y)
-print(index_y)
+# print(10%8)
 
+# s = 0
+# for i in range(1,101):
+#     for i 
