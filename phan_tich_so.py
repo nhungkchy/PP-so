@@ -56,7 +56,6 @@ def x_equidistant(data, index):
        
 def ConsiderApprox(data, indexs, y):
     lenght = len(indexs) - 1
-    Newton_x_equidistant = []
     Newton = []
     Lagrange = []
     while lenght >= 0:
@@ -66,19 +65,27 @@ def ConsiderApprox(data, indexs, y):
                 indexs.remove(indexs[lenght])
             else:
                 print("Mang: {} => Su dung phuong phap: ".format(indexs[lenght]), end='')
-                Lagrange_Newton(-data, indexs[lenght], y)
+                thu = Lagrange_Newton(-data, indexs[lenght], y)
                 x_equidistant(data, indexs[lenght])
+                if thu == True :
+                    Newton.append(indexs[lenght])
+                else:
+                    Lagrange.append(indexs[lenght])
         else:
             # xét trên đơn điệu tăng
             if data[indexs[lenght][0]][1]>y or y>data[indexs[lenght][1]][1]:
                 indexs.remove(indexs[lenght])
             else:
                 print("Mang: {} => Su dung phuong phap: ".format(indexs[lenght]), end='')
-                Lagrange_Newton(data, indexs[lenght], y)
+                thu = Lagrange_Newton(data, indexs[lenght], y)
                 x_equidistant(data, indexs[lenght])
+                if thu == True :
+                    Newton.append(indexs[lenght])
+                else:
+                    Lagrange.append(indexs[lenght])
         lenght -= 1
     
-    return indexs
+    return Newton, Lagrange
 
 # Đơn điệu tăng
 def Lagrange_Newton(data, index, y):
@@ -119,7 +126,9 @@ if __name__ == "__main__":
         print("Khong noi suy duoc!, x,y phai doi mot khac nhau")
     else:
         indexs = FindMonotonousInterval(data_sort)
-        index_y = ConsiderApprox(data, indexs, y)
+        Newton, Lagrange = ConsiderApprox(data, indexs, y)
+        print("Newton: ", Newton)
+        print("Lagrange: ", Lagrange)
 
         # ve do thi kiem chung
         x = []
