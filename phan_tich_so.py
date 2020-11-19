@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 
-excel_file = 'data.xlsx'
+excel_file = 'vd2.xlsx'
 data = pd.read_excel(excel_file, index = False).values
 
 def dataSort(data):
@@ -42,10 +42,22 @@ def InterpolationConditions(data):
                 return False
     return True
 
+def x_equidistant(data, index):
+    i = index[0]
+    while i < (index[1]-1):
+        delta_x1 = data[i][0] - data[i+1][0]
+        delta_x2 = data[i+1][0] - data[i+2][0]
+        i += 1
+        if abs(delta_x1 - delta_x2) >= 10e-5:
+            print("x khong cach deu")
+            return False
+    print("x cach deu")
+    return True
+       
 def ConsiderApprox(data, indexs, y):
     lenght = len(indexs) - 1
-    Newton_tien = []
-    Newton_lui = []
+    Newton_x_equidistant = []
+    Newton = []
     Lagrange = []
     while lenght >= 0:
         if data[indexs[lenght][0]][1] > data[indexs[lenght][1]][1]: 
@@ -53,16 +65,17 @@ def ConsiderApprox(data, indexs, y):
             if (data[indexs[lenght][0]][1]<y or y<data[indexs[lenght][1]][1]):
                 indexs.remove(indexs[lenght])
             else:
-                # print(-data)
-                print(indexs[lenght])
+                print("Mang: {} => Su dung phuong phap: ".format(indexs[lenght]), end='')
                 Lagrange_Newton(-data, indexs[lenght], y)
+                x_equidistant(data, indexs[lenght])
         else:
             # xét trên đơn điệu tăng
             if data[indexs[lenght][0]][1]>y or y>data[indexs[lenght][1]][1]:
                 indexs.remove(indexs[lenght])
             else:
-                print(indexs[lenght])
+                print("Mang: {} => Su dung phuong phap: ".format(indexs[lenght]), end='')
                 Lagrange_Newton(data, indexs[lenght], y)
+                x_equidistant(data, indexs[lenght])
         lenght -= 1
     
     return indexs
@@ -70,8 +83,9 @@ def ConsiderApprox(data, indexs, y):
 # Đơn điệu tăng
 def Lagrange_Newton(data, index, y):
     delta_y = []
+    flat =  True
     if index[1] - index[0] == 1:
-        print("Newton")
+        print("Newton voi khoang 2 moc")
     else:
         if data[index[0]+1][1] > y and data[index[0]][1] < y:
             print("Newton Tien")
@@ -89,27 +103,35 @@ def Lagrange_Newton(data, index, y):
             
             if (ty_hieu_1 <= 1.5 and ty_hieu_1 >= 0.67) or (ty_hieu_2 <= 1.5 and ty_hieu_2 >= 0.67):
                 print('Larange')
+                flat = False
             else:
                 print('Newton')
+    return flat
+
 
 if __name__ == "__main__":
     # sap xep lai bo du lieu tang dan theo x
     # kiem tra dieu kien noi suy
     # xet tung khoang (L or N)
+    y = 2.5
     data_sort = dataSort(data)
-    print(data_sort)
-    print(InterpolationConditions(data_sort))
-    indexs = FindMonotonousInterval(data_sort)
-    print(indexs)
-    y = .48
-    index_y = ConsiderApprox(data, indexs, y)
-    print(index_y)
-    
-    x = [0]*100
-    y = [0]*100
-    for i in range(100):
-        x[i] = i
-        y[i] = math.sin(i)
+    if InterpolationConditions(data_sort) == False:
+        print("Khong noi suy duoc!, x,y phai doi mot khac nhau")
+    else:
+        indexs = FindMonotonousInterval(data_sort)
+        index_y = ConsiderApprox(data, indexs, y)
 
-    plt.plot(x, y,'go-')
-    plt.show()
+        # ve do thi kiem chung
+        x = []
+        y = []
+        for i in range(len(data)):
+            x.append(data[i][0])
+            y.append(data[i][1])
+
+        plt.plot(x, y,'go-')
+        plt.plot(x,[2.5]*len(data), '-')
+        plt.title('vd2')
+        plt.xlabel('X')
+        plt.ylabel('Y')
+        plt.savefig('vd2.png')
+        plt.show()
