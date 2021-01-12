@@ -1,0 +1,12 @@
+/Users/lethihongnhung/Desktop/PP-so/code/bin/Debug/netcoreapp3.1/code.deps.json
+/Users/lethihongnhung/Desktop/PP-so/code/bin/Debug/netcoreapp3.1/code.runtimeconfig.json
+/Users/lethihongnhung/Desktop/PP-so/code/bin/Debug/netcoreapp3.1/code.runtimeconfig.dev.json
+/Users/lethihongnhung/Desktop/PP-so/code/bin/Debug/netcoreapp3.1/code.dll
+/Users/lethihongnhung/Desktop/PP-so/code/bin/Debug/netcoreapp3.1/code.pdb
+/Users/lethihongnhung/Desktop/PP-so/code/obj/Debug/netcoreapp3.1/code.csprojAssemblyReference.cache
+/Users/lethihongnhung/Desktop/PP-so/code/obj/Debug/netcoreapp3.1/code.AssemblyInfoInputs.cache
+/Users/lethihongnhung/Desktop/PP-so/code/obj/Debug/netcoreapp3.1/code.AssemblyInfo.cs
+/Users/lethihongnhung/Desktop/PP-so/code/obj/Debug/netcoreapp3.1/code.csproj.CoreCompileInputs.cache
+/Users/lethihongnhung/Desktop/PP-so/code/obj/Debug/netcoreapp3.1/code.dll
+/Users/lethihongnhung/Desktop/PP-so/code/obj/Debug/netcoreapp3.1/code.pdb
+/Users/lethihongnhung/Desktop/PP-so/code/obj/Debug/netcoreapp3.1/code.genruntimeconfig.cache
